@@ -25,9 +25,13 @@ day knowing exactly who to call next.
 
 ## Screenshots
 
-| Add a lead | Work the details |
-|---|---|
-| ![Add New Lead dialog](my-screenshots/Addnewlead.png) | ![Lead details dialog](my-screenshots/Edit.png) |
+**Add a lead** — name it, optionally add company and phone, save.
+
+![Add New Lead dialog](my-screenshots/Addnewlead.png)
+
+**Work the details** — status, the discussion timeline, and follow-up controls in one place.
+
+![Lead details dialog](my-screenshots/Edit.png)
 
 ## Under the hood
 
