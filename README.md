@@ -62,6 +62,15 @@ npm run dev                                      # http://localhost:3000
 Open `http://localhost:3000`. The dashboard reads `NEXT_PUBLIC_API_URL`
 (defaults to `http://localhost:8000`; see [.env.example](./.env.example)).
 
+### Or run the whole stack with Docker
+
+One command builds both services and seeds the database on first boot (data
+persists in a named volume):
+
+```bash
+docker compose up --build      # dashboard on http://localhost:3000
+```
+
 ## Configuration
 
 | Variable | Default | Purpose |
@@ -130,6 +139,7 @@ backend/
     routes/leads.py  # leads, discussions, follow-up endpoints
   seed.py            # demo data
   tests/test_api.py  # pytest suite
+  Dockerfile         # image for `docker compose up`
 frontend/
   src/app/page.tsx          # dashboard: fetch once, filter client-side
   src/components/           # header, filters, cards, dialogs, timeline, forms
@@ -137,6 +147,8 @@ frontend/
   src/lib/api.ts            # typed HTTP client
   src/lib/date-utils.ts     # UTC parsing, local display, today/overdue logic
   e2e/lead-lifecycle.spec.ts
+  Dockerfile                 # multi-stage build for `docker compose up`
+docker-compose.yml           # backend + frontend, seeded, volume-backed SQLite
 ```
 
 Reference mockups live in `provided-screenshots/`.
