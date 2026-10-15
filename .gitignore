@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+
+# SQLite dev/test databases (recreated automatically; seed demo data with
+# `uv run python seed.py` from backend/). The committed schema lives in code.
+backend/data/*.db
+*.db-journal
+
+# Node (frontend/.gitignore additionally covers the Next.js app)
+node_modules/
+
+# Playwright
+test-results/
+playwright-report/
+playwright/.cache/
+
+# Local env files (the committed .env.example documents all variables)
+.env
+
+# extra
+DECISION.md
