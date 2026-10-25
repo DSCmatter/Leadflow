@@ -22,3 +22,6 @@ playwright/.cache/
 
 # extra
 DECISION.md
+.claude/
+.agents/
+agent/

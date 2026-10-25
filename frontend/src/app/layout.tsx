@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Geist, Instrument_Serif } from "next/font/google";
 import { cn } from "@/lib/utils";
+import { AutterProvider } from "@/components/autter-provider";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
@@ -26,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={cn("h-full", "font-sans", geist.variable, display.variable)}>
       <body className="min-h-full bg-paper text-ink antialiased">
-        {children}
+        <AutterProvider>{children}</AutterProvider>
       </body>
     </html>
   );

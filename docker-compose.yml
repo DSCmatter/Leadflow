@@ -8,6 +8,15 @@ services:
     environment:
       DATABASE_PATH: /app/data/leadflow.db
       CORS_ORIGINS: http://localhost:3000
+      # Autter Runtime: OTLP/HTTP to the hosted ingester (see .env.example).
+      AUTTER_RUNTIME_KEY: ${AUTTER_RUNTIME_KEY:-}
+      OTEL_EXPORTER_OTLP_ENDPOINT: https://otlp.autter.dev
+      OTEL_EXPORTER_OTLP_HEADERS: authorization=Bearer ${AUTTER_RUNTIME_KEY:-}
+      OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
+      OTEL_SERVICE_NAME: leadflow-api
+      OTEL_RESOURCE_ATTRIBUTES: service.version=${GIT_SHA:-dev},deployment.environment=development
+      OTEL_TRACES_SAMPLER: parentbased_traceidratio
+      OTEL_TRACES_SAMPLER_ARG: "0.01"
     ports:
       - "8000:8000"
     volumes:
@@ -33,6 +42,9 @@ services:
     image: leadflow-frontend
     environment:
       NEXT_PUBLIC_API_URL: http://localhost:8000
+      # Server-only key: read by the relay route and registerAutter.
+      AUTTER_RUNTIME_KEY: ${AUTTER_RUNTIME_KEY:-}
+      GIT_SHA: ${GIT_SHA:-dev}
     ports:
       - "3000:3000"
     depends_on:

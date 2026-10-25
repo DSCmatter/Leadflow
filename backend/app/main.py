@@ -10,6 +10,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from . import database
+from .observability import init_observability, instrument_app
 from .routes import leads
 
 
@@ -20,6 +21,8 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
 
 
 def create_app() -> FastAPI:
+    # Tracing must start before the app is instrumented.
+    init_observability()
     app = FastAPI(title="LeadFlow API", version="1.0.0", lifespan=lifespan)
 
     origins = [
@@ -40,6 +43,14 @@ def create_app() -> FastAPI:
         return {"status": "ok"}
 
     app.include_router(leads.router)
+
+    # Temporary Autter Runtime selftest route: throws on purpose so the error
+    # shows up in the dashboard. Delete before shipping.
+    @app.get("/__autter-selftest/error")
+    def autter_selftest_error() -> dict:
+        raise RuntimeError("Autter Runtime selftest error (backend)")
+
+    instrument_app(app)
     return app
 
 
